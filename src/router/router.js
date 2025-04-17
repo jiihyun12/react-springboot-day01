@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PostsContainer from "../rest/post/PostsContainer";
 import PostRead from "../rest/post/PostRead";
 import PostUpdate from "../rest/post/PostUpdate";
+import PostDelete from "../rest/post/PostDelete";
 
 const router = createBrowserRouter([
     {
@@ -17,20 +18,19 @@ const router = createBrowserRouter([
             element : <PostRead />
         }
     ]
-    },  
+    },    
     {
-        path : "/update",
+        path : "/update/:id",
         element : <PostUpdate />,
-        children : [
-            {
-            path : ":id",
-            element : <PostUpdate />
-
-        }
-    ]
+        
+    },
+    {
+        path : "/delete/:id",
+        element : <PostDelete />,
+        
     },
 
-    
 ])
+
 
 export default router;

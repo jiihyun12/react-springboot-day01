@@ -29,7 +29,10 @@ const PostRead = () => {
     }, [id]);
 
     const handleGoToEdit = () => {
-        navigate(`/posts/edit/${id}`);
+        navigate(`/update/${id}`);
+      };
+    const handleGoToDelete = () => {
+        navigate(`/delete/${id}`);
       };
     
     return (
@@ -37,6 +40,7 @@ const PostRead = () => {
         <p>{postTitle}</p>
         <p>{postContent}</p>
         <button onClick={handleGoToEdit}>수정하기</button>
+        <button onClick={handleGoToDelete}>삭제하기</button>
       </div>
   
 );
