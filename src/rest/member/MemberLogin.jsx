@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'; // 폼 상태 관리 및 유효성 검사 기능 제공
 
-const JoinContainer = () => {
+const MemberLogin = () => {
 
   const {
     register, // input을 react-hook-form에 등록할 때 사용
@@ -145,4 +145,4 @@ const JoinContainer = () => {
   );
 };
 
-export default JoinContainer;
+export default MemberLogin;
