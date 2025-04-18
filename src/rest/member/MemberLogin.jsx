@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form'; // 폼 상태 관리 및 유효성 검사 기능 제공
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const MemberLogin = () => {
 
@@ -19,11 +21,44 @@ const MemberLogin = () => {
   // 소문자, 특수문자, 숫자를 포함한 8자리 이상의 정규식
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
 
-  return (
-    <form onSubmit={handleSubmit(async (data) => { // 사용자가 form을 제출하면 이 함수가 실행된다.
+  const dispatch = useDispatch();
+  const userStore = useSelector((store) => store.user)
+  const navigate = useNavigate()
 
-        console.log(data)
-       const  {hobbies, passwordConfirm, ...memberVO} = data 
+    // 메세지 실패 처리
+    const message = location.state && location.state.message;
+    useEffect(() => {
+      if(message){
+        alert(message)
+        // 초기화
+        navigate(location.pathname, {
+          replace : true,
+          state : {message : ""}
+        })
+      }
+    }, [message])
+
+
+  return (    
+    <form onSubmit={handleSubmit(async (data) => { // 사용자가 form을 제출하면 이 함수가 실행된다.
+      const id = 2;
+      const memberVO = { ...data, id};
+
+
+      await fetch(`http://localhost:10000/members/api/member/${id}`),{
+        method : "GET"
+      
+      }
+      .then((res)=>res.json())
+      .then((memberVO)=>{
+        //로그인 성공!
+        dispatch(setUser(memberVO))
+        dispatch((setUserSatus(ttrue)))
+        navigate("/mypage")
+        
+      })
+
+
        // 객체 비구조화 할당을 사용하여 hobbies와 passwordConfirm을 제외한 나머지 값을 memberVO에 담는다.
       //  passwordConfirm은 비밀번호 확인을 위한 값이므로 제외한다.
       //  hobbies는 체크박스의 값이므로 제외한다.
@@ -50,7 +85,6 @@ const MemberLogin = () => {
         }, 
         body : JSON.stringify(memberVO) // JsvaScript 객체를 JSON 문자열로 변환하여 전송한다.
       })
-
 
     })}>
 
