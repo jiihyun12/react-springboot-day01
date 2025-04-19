@@ -1,10 +1,9 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 회원탈퇴
 const DeleteContainer = () => {
   // const navigate = useNavigate();
-  const id = 22;
+  const id = 65;
   
   const withdraw = async () => {
     if(window.confirm("정말로 탈퇴하시겠어요?")){

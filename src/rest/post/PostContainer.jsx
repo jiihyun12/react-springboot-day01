@@ -4,7 +4,7 @@ const PostContainer = () => {
   
   // 게시글 1개 조회 후 
   // 데이터의 제목과, 내용을 화면에 출력하기
-  const postId = 2;
+  const postId = 4;
   const [post, setPost] = useState({})
   const {postTitle, postContent} = post;
 

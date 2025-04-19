@@ -1,11 +1,13 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-const PostLayOut = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const PostLayout = () => {
+  return (
+    <div>
+      레이아웃
+      <Outlet />
+    </div>
+  );
 };
 
-export default PostLayOut;
+export default PostLayout;

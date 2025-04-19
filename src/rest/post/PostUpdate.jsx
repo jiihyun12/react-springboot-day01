@@ -1,75 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useParams } from 'react-router-dom';
 
 const PostUpdate = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const {register, handleSubmit, getValues, reset, formState: { isSubmitting, isSubmitted, errors }} = useForm({mode:"onChange"})
 
-  const [post, setPost] = useState(null);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-
-  useEffect(() => {
-    const updatePost = async () => {
-      try {
-        const response = await fetch(`http://localhost:10000/posts/api/post/${id}`);
-        const data = await response.json();
-        setPost(data);
-        setTitle(data.postTitle);
-        setContent(data.postContent);
-      } catch (error) {
-        console.error("게시글 못 불러온다 안하나!", error);
-      }
-    };
-
-    updatePost();
-  }, [id]);
-
-  const handleUpdate = async () => {
-    try {
-      const response = await fetch(`http://localhost:10000/posts/api/post/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          postTitle: title,
-          postContent: content
-        })
-      });
-
-      if (response.ok) {
-        alert('수정 했다잇');
-        navigate(`/`);
-      } else {
-        alert('수정 실패다잇');
-      }
-    } catch (error) {
-      console.error('수정 에러 발생 애옹애옹', error);
-    }
-  };
+  const {id} = useParams();
 
   return (
-    <div>
-      <h2>게시글 수정</h2>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="제목을 입력하세요"
-      />
-      <br />
-      <input
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="내용을 입력하세요"
-      />
-      <br />
-      <button onClick={handleUpdate}>
-        수정 완료 하기
-      </button>
-    </div>
+    <form onSubmit={handleSubmit(async (data) => {
+      
+      const postVO = {...data, id};
+      console.log(postVO)
 
+      await fetch(`http://localhost:10000/posts/api/post/${id}`, {
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body: JSON.stringify(postVO)
+      }).then((res) => {
+        console.log("fetch 성공!")
+      }).catch((e) => {
+        console.log("fetch 실패!")
+      })
+    })}>
+      
+      <label>
+        <p>제목</p>
+        <input 
+          type="text" placeholder='제목'
+          {...register("postTitle", {
+            required : true,
+          })}
+        />
+        {errors && errors?.postTitle?.type === "required" && (
+          <p>제목을 입력하세요</p>
+        )}
+      </label>
+
+      <label>
+        <p>내용</p>
+        <input 
+          type="text" placeholder="내용을 입력하세요"
+          {...register("postContent", {
+            required : true,
+          })}
+        />
+        {errors && errors?.postContent?.type === "required" && (
+          <p>내용을 입력하세요</p>
+        )}
+      </label>
+
+      <button disabled={isSubmitting}>게시글 수정</button>
+      <Link to={`/read/${id}`}>뒤로가기</Link>
+    </form>
   );
 };
 

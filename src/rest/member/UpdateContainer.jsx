@@ -6,7 +6,7 @@ const UpdateContainer = () => {
   // 회원 정보
   const id = 84;
   const [member, setMember] = useState({})
-  const [isUpdate, setIsUpdate] = useState(false); 
+  const [isUpdate, setIsUpdate] = useState(false);
 
   // useForm
   const {register, handleSubmit, getValues, reset, formState: { isSubmitting, isSubmitted, errors }} = useForm({mode:"onChange"})

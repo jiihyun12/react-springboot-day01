@@ -6,8 +6,8 @@ import MemberLogin from "../rest/member/MemberLogin";
 import JoinContainer from "../rest/member/JoinContainer";
 import UpdateContainer from "../rest/member/UpdateContainer";
 import DeleteContainer from "../rest/member/DeleteContainer";
-import MyPage from "../rest/mypage/Mypage";
-import PostLayout from "../rest/post/PostLayOut";
+import MyPage from "../rest/mypage/MyPage";
+import PostLayout from "../rest/post/PostLayout";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         element : <PostsContainer />
       },
       {
-        path : "/read",
+        path : "read",
         element : <PostRead />,
         children : [
           {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path : "/update",
+        path : "update",
         element : <PostUpdate />,
         children : [
           {

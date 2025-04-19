@@ -1,22 +1,20 @@
-import { createAction, handleActions } from "redux-actions";
+const { createAction, handleActions } = require("redux-actions");
 
 // 타입 생성
-const SET_USER = "user/SET/USER";
+const SET_USER = "user/SET_USER";
+const SET_USER_STATUS = "user/SET_USER_STATUS"
 
-const SET_USER_STATUS = "user/SET_USER_STATUS";
+export const setUser = createAction(SET_USER, (currentUser) => currentUser)
+export const setUserStatus = createAction(SET_USER_STATUS, (isLogin) => isLogin)
 
-const setUser = createAction(SET_USER, (currentUser)=> currentUser );
-const setUserStatus = createAction(SET_USER_STATUS, (isLogin)=> isLogin );
-
-const UserInitialValue = {
-    currentUser : {},
-    isLogin : false
+const userInitialValue = {
+  currentUser : {},
+  isLogin : false
 }
 
 const user = handleActions({
-    [SET_USER] : (state, action) => ({...state, currentUser : action.payload}),
-    [SET_USER_STATUS] : (state, action) => ({...state, login : action.payload})
-
-}, UserInitialValue)
+  [SET_USER] : (state, action) => ({...state, currentUser : action.payload }),
+  [SET_USER_STATUS] : (state, action) => ({...state, isLogin: action.payload })
+}, userInitialValue)
 
 export default user;
